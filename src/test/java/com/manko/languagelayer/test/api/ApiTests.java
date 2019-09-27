@@ -1,6 +1,5 @@
 package com.manko.languagelayer.test.api;
 
-
 import java.util.Collections;
 
 import com.manko.languagelayer.Detect;
