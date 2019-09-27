@@ -1,4 +1,4 @@
-package com.manko.languagelayer.test;
+package com.manko.languagelayer.test.api;
 
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;

@@ -1,4 +1,4 @@
-package com.manko.languagelayer.test;
+package com.manko.languagelayer.test.api;
 
 
 import java.util.Collections;
@@ -12,11 +12,12 @@ import org.junit.Test;
 import static com.jayway.restassured.RestAssured.given;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class DetectApiTests extends BaseApiTest {
+public class ApiTests extends BaseApiTest {
     private static final int INVALID_ACCESS_KEY_CODE = 101;
     private static final int NO_QUERY_TEXT_PROVIDED_CODE = 210;
     private static final int DETECTION_FAILED_CODE = 910;
     private static final String DETECT_PATH = "/detect";
+    private static final String QUERY_PARAM = "query";
 
     @Test
     public void shouldDetectEnglishLanguage(){
@@ -48,9 +49,9 @@ public class DetectApiTests extends BaseApiTest {
 
     @Test
     public void shouldNotSuccessDetectLanguageIfTextIsNumber(){
-        ErrorResponse response = given().queryParam("query", 1)
+        ErrorResponse response = given().queryParam(QUERY_PARAM, 1)
                                         .when()
-                                        .get("/detect")
+                                        .get(DETECT_PATH)
                                         .then().assertThat().statusCode(200).extract().body().as(ErrorResponse.class);
 
         assertThat(response).isNotNull();
@@ -60,9 +61,9 @@ public class DetectApiTests extends BaseApiTest {
 
     @Test
     public void shouldNotSuccessDetectLanguageIfTextIsAbsent(){
-        ErrorResponse response = given().queryParam("query", "")
+        ErrorResponse response = given().queryParam(QUERY_PARAM, "")
                                         .when()
-                                        .get("/detect")
+                                        .get(DETECT_PATH)
                                         .then().assertThat().statusCode(200).extract().body().as(ErrorResponse.class);
 
         assertThat(response).isNotNull();
@@ -73,10 +74,10 @@ public class DetectApiTests extends BaseApiTest {
     @Test
     public void shouldNotSuccessDetectLanguageIfAccessKeyIsInvalid(){
         String text = Utils.readResource("/en.txt");
-        ErrorResponse response = given().queryParam("query", text)
+        ErrorResponse response = given().queryParam(QUERY_PARAM, text)
                                         .queryParam("access_key", "invalid")
                                         .when()
-                                        .get("/detect")
+                                        .get(DETECT_PATH)
                                         .then().assertThat().statusCode(200).extract().body().as(ErrorResponse.class);
 
         assertThat(response).isNotNull();
@@ -86,7 +87,7 @@ public class DetectApiTests extends BaseApiTest {
 
 
     private DetectResponse getDetectResponseByText(String text) {
-        return given().queryParam("query", text)
+        return given().queryParam(QUERY_PARAM, text)
                       .when()
                       .get(DETECT_PATH)
                       .then().assertThat().statusCode(200).extract().body().as(DetectResponse.class);
