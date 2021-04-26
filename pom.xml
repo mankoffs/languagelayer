@@ -19,7 +19,7 @@
         <assertj-core.version>3.13.2</assertj-core.version>
         <lombok.version>1.18.10</lombok.version>
         <jackson.version>2.9.10</jackson.version>
-        <common-io.version>2.6</common-io.version>
+        <common-io.version>2.7</common-io.version>
         <selenide.version>5.3.1</selenide.version>
     </properties>
 
